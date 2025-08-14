@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import icon from  '../assets/icon.png'
 import heavy from  '../assets/heavy.png'
 import humidity from  '../assets/humidity.png'
@@ -15,6 +15,7 @@ import skt from  '../assets/skt.png'
 import './Weather.css'
 
 const Weather = () => {
+  const inputRef=useRef();
   const [weatherData,setWeatherData]=useState(false);
   const allIcon= {
 "01d" : sun,
@@ -53,16 +54,16 @@ console.log(error);
   }
 }
 useEffect(()=>{
- search("Kitale");
+ search("london");
 },[]);
 
   return (
     <div className='weather'>
         <div className='search_bar'>
-            <input type="text" placeholder='Search' />
-            <img src={icon} alt="" />
+            <input ref={inputRef} type="text" placeholder='Search' />
+            <img src={icon} alt="" onClick={()=>search(inputRef.current.value ) }/>
         </div>
-         <img src={heavy} alt="" className='weather-icon'/>
+         <img src={ weatherData.icon} alt="" className='weather-icon'/>
          <p className='temperature'>{weatherData.temperature}°C</p>
          <p className='location'>{weatherData.location}</p>
          <div className='weather-data'>
